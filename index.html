@@ -76,7 +76,7 @@
 </div>
 
 <script>
-  const API_URL = "http://127.0.0.1:8000/analyze";
+  const API_URL = "https://ai-code-explainer-wbed.onrender.com";
 
   async function analyzeCode() {
     const code = document.getElementById("codeInput").value;
@@ -95,7 +95,7 @@
     resultsEl.innerHTML = "";
 
     try {
-      const res = await fetch(API_URL, {
+      const res = await fetch(`${API_URL}/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code, language }),
