@@ -1,0 +1,168 @@
+Here are error-debugging examples in 10 different programming languages:
+
+1. Python
+
+try:
+    result = 10 / 0
+except ZeroDivisionError as e:
+    print(f"Error: {e}")
+    import traceback
+    traceback.print_exc()
+finally:
+    print("Cleanup done")
+
+
+
+2. JavaScript
+
+try {
+    const obj = null;
+    console.log(obj.property);
+} catch (e) {
+    console.error("Error:", e.message);
+    console.error(e.stack);
+} finally {
+    console.log("Cleanup done");
+}
+
+
+3. C++
+
+#include <iostream>
+#include <stdexcept>
+
+int main() {
+    try {
+        int arr[5] = {1, 2, 3, 4, 5};
+        if (10 >= 5) throw std::out_of_range("Index out of bounds");
+        std::cout << arr[10];
+    } catch (const std::out_of_range& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+    return 0;
+}
+
+
+4. C#
+csharp
+using System;
+
+class Program {
+    static void Main() {
+        try {
+            int[] arr = new int[5];
+            Console.WriteLine(arr[10]);
+        } catch (IndexOutOfRangeException e) {
+            Console.WriteLine("Error: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+        } finally {
+            Console.WriteLine("Cleanup done");
+        }
+    }
+}
+
+
+5. Go
+go
+package main
+
+import "fmt"
+
+func safeDivide(a, b int) (result int, err error) {
+    defer func() {
+        if r := recover(); r != nil {
+            err = fmt.Errorf("recovered from: %v", r)
+        }
+    }()
+    result = a / b
+    return
+}
+
+func main() {
+    result, err := safeDivide(10, 0)
+    if err != nil {
+        fmt.Println("Error:", err)
+    } else {
+        fmt.Println("Result:", result)
+    }
+}
+
+
+6. Ruby
+ruby
+begin
+  arr = [1, 2, 3]
+  puts arr.fetch(10)
+rescue IndexError => e
+  puts "Error: #{e.message}"
+  puts e.backtrace
+ensure
+  puts "Cleanup done"
+end
+
+
+7. PHP
+php
+<?php
+try {
+    $result = 10 / 0;
+} catch (DivisionByZeroError $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+    echo $e->getTraceAsString();
+} finally {
+    echo "Cleanup done\n";
+}
+?>
+
+
+8. Swift
+swift
+enum MyError: Error {
+    case invalidValue(String)
+}
+
+func checkValue(_ value: Int) throws {
+    if value < 0 {
+        throw MyError.invalidValue("Negative value: \(value)")
+    }
+}
+
+do {
+    try checkValue(-5)
+} catch MyError.invalidValue(let message) {
+    print("Error: \(message)")
+} catch {
+    print("Unknown error: \(error)")
+}
+
+
+9. Kotlin
+kotlin
+fun main() {
+    try {
+        val arr = arrayOf(1, 2, 3)
+        println(arr[10])
+    } catch (e: ArrayIndexOutOfBoundsException) {
+        println("Error: ${e.message}")
+        e.printStackTrace()
+    } finally {
+        println("Cleanup done")
+    }
+}
+
+
+10. Rust
+rust
+fn divide(a: i32, b: i32) -> Result<i32, String> {
+    if b == 0 {
+        return Err("Division by zero".to_string());
+    }
+    Ok(a / b)
+}
+
+fn main() {
+    match divide(10, 0) {
+        Ok(result) => println!("Result: {}", result),
+        Err(e) => println!("Error: {}", e),
+    }
+}
